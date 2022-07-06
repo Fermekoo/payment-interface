@@ -8,7 +8,7 @@ func NewPayment(payment PaymentInterface) *Payment {
 	return &Payment{payment}
 }
 
-func (p *Payment) Pay(payloads CreateVa) (string, error) {
+func (p *Payment) Pay(payloads CreateVa) (*ResponseVa, error) {
 	return p.Payment.Pay(payloads)
 }
 

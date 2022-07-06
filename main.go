@@ -7,11 +7,12 @@ import (
 )
 
 func main() {
+
 	vendor := payment.NewXendit()
 	paymentService := payment.NewPayment(vendor)
 
 	createVa := payment.CreateVa{
-		Bank:   "bca",
+		Bank:   "permata",
 		Name:   "Dandi Fermeko",
 		Amount: 25000,
 	}

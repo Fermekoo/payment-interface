@@ -4,7 +4,7 @@ import (
 	"log"
 	"payment-interface/utils"
 
-	strRand "github.com/Fermekoo/go-str-random"
+	"github.com/google/uuid"
 	"github.com/midtrans/midtrans-go"
 	"github.com/midtrans/midtrans-go/coreapi"
 )
@@ -20,14 +20,18 @@ func NewMidtrans() *Midtrans {
 	return &Midtrans{}
 }
 
-func (m *Midtrans) Pay(payloads CreateVa) (string, error) {
+func (m *Midtrans) Pay(payloads CreateVa) (*ResponseVa, error) {
+
+	var vaNum string
+	bank := midtrans.Bank(payloads.Bank)
+
 	chargeReq := &coreapi.ChargeReq{
 		PaymentType: coreapi.PaymentTypeBankTransfer,
 		BankTransfer: &coreapi.BankTransferDetails{
-			Bank: midtrans.Bank(payloads.Bank),
+			Bank: bank,
 		},
 		TransactionDetails: midtrans.TransactionDetails{
-			OrderID:  strRand.RandomString(32),
+			OrderID:  uuid.NewString(),
 			GrossAmt: int64(payloads.Amount),
 		},
 	}
@@ -37,7 +41,20 @@ func (m *Midtrans) Pay(payloads CreateVa) (string, error) {
 		log.Fatal(err)
 	}
 
-	return response.TransactionID, nil
+	if bank == "permata" {
+		vaNum = response.PermataVaNumber
+
+	} else {
+		vaNum = response.VaNumbers[0].VANumber
+	}
+
+	responseVa := ResponseVa{
+		OrderID:  response.OrderID,
+		VaNumber: vaNum,
+		Status:   response.TransactionStatus,
+	}
+
+	return &responseVa, nil
 }
 
 func (m *Midtrans) Inquiry() (string, error) {
