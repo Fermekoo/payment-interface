@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	vendor := payment.NewMidtrans()
+	vendor := payment.NewXendit()
 	paymentService := payment.NewPayment(vendor)
 
 	pay, err := paymentService.Pay()

@@ -5,6 +5,7 @@ import (
 	"log"
 	"payment-interface/utils"
 
+	strRand "github.com/Fermekoo/go-str-random"
 	"github.com/midtrans/midtrans-go"
 	"github.com/midtrans/midtrans-go/coreapi"
 )
@@ -27,7 +28,7 @@ func (m *Midtrans) Pay() (string, error) {
 			Bank: "bca",
 		},
 		TransactionDetails: midtrans.TransactionDetails{
-			OrderID:  "22419223",
+			OrderID:  strRand.RandomString(32),
 			GrossAmt: 200000,
 		},
 	}
