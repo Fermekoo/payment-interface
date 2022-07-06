@@ -12,8 +12,8 @@ func (p *Payment) Pay(payloads CreateVa) (*ResponseVa, error) {
 	return p.Payment.Pay(payloads)
 }
 
-func (p *Payment) Inquiry() (string, error) {
-	return p.Payment.Inquiry()
+func (p *Payment) Inquiry(order_id string) (*ResponseVa, error) {
+	return p.Payment.Inquiry(order_id)
 }
 
 func (p *Payment) Callback() (string, error) {

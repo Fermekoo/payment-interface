@@ -57,8 +57,31 @@ func (m *Midtrans) Pay(payloads CreateVa) (*ResponseVa, error) {
 	return &responseVa, nil
 }
 
-func (m *Midtrans) Inquiry() (string, error) {
-	return "Midtrans Inquiry", nil
+func (m *Midtrans) Inquiry(order_id string) (*ResponseVa, error) {
+
+	var vaNum string
+
+	response, err := mdCore.CheckTransaction(order_id)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	if response.PermataVaNumber != "" {
+		vaNum = response.PermataVaNumber
+
+	} else {
+		vaNum = response.VaNumbers[0].VANumber
+	}
+
+	responseVa := ResponseVa{
+		OrderID:  response.OrderID,
+		VaNumber: vaNum,
+		Status:   response.TransactionStatus,
+	}
+
+	return &responseVa, nil
+
 }
 
 func (m *Midtrans) Callback() (string, error) {

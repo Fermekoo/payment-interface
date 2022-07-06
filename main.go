@@ -8,19 +8,27 @@ import (
 
 func main() {
 
-	vendor := payment.NewXendit()
+	vendor := payment.NewMidtrans()
 	paymentService := payment.NewPayment(vendor)
 
 	createVa := payment.CreateVa{
-		Bank:   "permata",
+		Bank:   "bca",
 		Name:   "Dandi Fermeko",
 		Amount: 25000,
 	}
+
 	pay, err := paymentService.Pay(createVa)
 
 	if err != nil {
 		log.Fatal(err)
 	}
 
+	inquiry, err := paymentService.Inquiry(pay.OrderID)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	fmt.Println(pay)
+	fmt.Println(inquiry)
 }
