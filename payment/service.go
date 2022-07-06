@@ -8,8 +8,8 @@ func NewPayment(payment PaymentInterface) *Payment {
 	return &Payment{payment}
 }
 
-func (p *Payment) Pay() (string, error) {
-	return p.Payment.Pay()
+func (p *Payment) Pay(payloads CreateVa) (string, error) {
+	return p.Payment.Pay(payloads)
 }
 
 func (p *Payment) Inquiry() (string, error) {

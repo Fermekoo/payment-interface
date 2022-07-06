@@ -1,7 +1,7 @@
 package payment
 
 type PaymentInterface interface {
-	Pay() (string, error)
+	Pay(payloads CreateVa) (string, error)
 	Inquiry() (string, error)
 	Callback() (string, error)
 }

@@ -5,6 +5,7 @@ import (
 	"payment-interface/utils"
 
 	strRand "github.com/Fermekoo/go-str-random"
+	"github.com/gobeam/stringy"
 	"github.com/xendit/xendit-go"
 	"github.com/xendit/xendit-go/virtualaccount"
 )
@@ -18,17 +19,12 @@ func NewXendit() *Xendit {
 	return &Xendit{}
 }
 
-func (x *Xendit) Pay() (string, error) {
-
-	banks, err := virtualaccount.GetAvailableBanks()
-	if err != nil {
-		log.Fatal(err)
-	}
+func (x *Xendit) Pay(payloads CreateVa) (string, error) {
 
 	createVaParams := virtualaccount.CreateFixedVAParams{
 		ExternalID: strRand.RandomString(32),
-		BankCode:   banks[0].Code,
-		Name:       "Dandi Fermeko",
+		BankCode:   stringy.New(payloads.Bank).ToUpper(),
+		Name:       payloads.Name,
 	}
 
 	resp, err := virtualaccount.CreateFixedVA(&createVaParams)

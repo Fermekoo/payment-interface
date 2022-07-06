@@ -10,7 +10,12 @@ func main() {
 	vendor := payment.NewXendit()
 	paymentService := payment.NewPayment(vendor)
 
-	pay, err := paymentService.Pay()
+	createVa := payment.CreateVa{
+		Bank:   "bca",
+		Name:   "Dandi Fermeko",
+		Amount: 25000,
+	}
+	pay, err := paymentService.Pay(createVa)
 
 	if err != nil {
 		log.Fatal(err)

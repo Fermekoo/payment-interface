@@ -1,7 +1,6 @@
 package payment
 
 import (
-	"fmt"
 	"log"
 	"payment-interface/utils"
 
@@ -21,18 +20,18 @@ func NewMidtrans() *Midtrans {
 	return &Midtrans{}
 }
 
-func (m *Midtrans) Pay() (string, error) {
+func (m *Midtrans) Pay(payloads CreateVa) (string, error) {
 	chargeReq := &coreapi.ChargeReq{
 		PaymentType: coreapi.PaymentTypeBankTransfer,
 		BankTransfer: &coreapi.BankTransferDetails{
-			Bank: "bca",
+			Bank: midtrans.Bank(payloads.Bank),
 		},
 		TransactionDetails: midtrans.TransactionDetails{
 			OrderID:  strRand.RandomString(32),
-			GrossAmt: 200000,
+			GrossAmt: int64(payloads.Amount),
 		},
 	}
-	fmt.Println(chargeReq)
+
 	response, err := mdCore.ChargeTransaction(chargeReq)
 	if err != nil {
 		log.Fatal(err)
