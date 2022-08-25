@@ -8,7 +8,7 @@ import (
 
 func main() {
 
-	vendor := payment.NewMidtrans()
+	vendor := payment.NewIntrajasa()
 	paymentService := payment.NewPayment(vendor)
 
 	createVa := payment.CreateVa{
@@ -23,12 +23,12 @@ func main() {
 		log.Fatal(err)
 	}
 
-	inquiry, err := paymentService.Inquiry(pay.OrderID)
+	// inquiry, err := paymentService.Inquiry(pay.OrderID)
 
-	if err != nil {
-		log.Fatal(err)
-	}
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
 
 	fmt.Println(pay)
-	fmt.Println(inquiry)
+	// fmt.Println(inquiry)
 }

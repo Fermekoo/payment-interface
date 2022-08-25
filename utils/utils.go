@@ -17,7 +17,7 @@ func Conf(key string) string {
 	viper.SetConfigName("config")
 	viper.AddConfigPath(".")
 	viper.AutomaticEnv()
-	viper.SetConfigType("yml")
+	viper.SetConfigType("json")
 	if err := viper.ReadInConfig(); err != nil {
 		log.Fatal(err)
 	}

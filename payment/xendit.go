@@ -15,7 +15,7 @@ type Xendit struct {
 }
 
 func NewXendit() *Xendit {
-	xendit.Opt.SecretKey = utils.Conf("PAYMENT.XENDIT_SERVER_KEY")
+	xendit.Opt.SecretKey = utils.Conf("payment.xendit_server_key")
 	return &Xendit{}
 }
 

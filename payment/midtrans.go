@@ -16,7 +16,7 @@ type Midtrans struct {
 }
 
 func NewMidtrans() *Midtrans {
-	mdCore.New(utils.Conf("PAYMENT.MIDTRANS_SERVER_KEY"), midtrans.Sandbox)
+	mdCore.New(utils.Conf("payment.midtrans_server_key"), midtrans.Sandbox)
 	return &Midtrans{}
 }
 
