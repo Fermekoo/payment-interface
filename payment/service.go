@@ -1,6 +1,10 @@
 package payment
 
-import "github.com/gobeam/stringy"
+import (
+	"errors"
+
+	"github.com/gobeam/stringy"
+)
 
 type Payment struct {
 	Payment PaymentInterface
@@ -10,8 +14,9 @@ type Payment struct {
 // 	return &Payment{payment}
 // }
 
-func NewPayment(vendor_name string) *Payment {
+func NewPayment(vendor_name string) (*Payment, error) {
 	var payment PaymentInterface
+	var err error
 	switch stringy.New(vendor_name).ToUpper() {
 	case "XENDIT":
 		payment = NewXendit()
@@ -19,9 +24,10 @@ func NewPayment(vendor_name string) *Payment {
 		payment = NewMidtrans()
 	case "INTRAJASA":
 		payment = NewIntrajasa()
-
+	default:
+		err = errors.New("service not available")
 	}
-	return &Payment{payment}
+	return &Payment{payment}, err
 }
 
 func (p *Payment) Pay(payloads CreateVa) (*ResponseVa, error) {
