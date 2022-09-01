@@ -15,7 +15,7 @@ func main() {
 	}
 
 	createVa := payment.CreateVa{
-		Bank:         "bca",
+		Bank:         "PERMATA",
 		Name:         "Dandi Fermeko",
 		Amount:       25000,
 		Address:      "Jakarta Selatan",

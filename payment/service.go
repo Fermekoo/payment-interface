@@ -10,10 +10,6 @@ type Payment struct {
 	Payment PaymentInterface
 }
 
-// func NewPayment(payment PaymentInterface) *Payment {
-// 	return &Payment{payment}
-// }
-
 func NewPayment(vendor_name string) (*Payment, error) {
 	var payment PaymentInterface
 	var err error
