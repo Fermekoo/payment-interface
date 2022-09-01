@@ -17,20 +17,20 @@ func NewIntrajasa() *Intrajasa {
 
 func (i *Intrajasa) Pay(payloads CreateVa) (*ResponseVa, error) {
 	customer_intra := intrajasa.CustomerIntra{
-		CustName:         strings.ToUpper("INDODAX Dandi Fermeko"),
-		CustAddress1:     "Jakarta",
-		CustEmail:        "dandi.fermeko@bitcoin.co.id",
-		CustRegisterDate: "2020-01-01",
+		CustName:         strings.ToUpper(payloads.Name),
+		CustAddress1:     payloads.Address,
+		CustEmail:        payloads.Email,
+		CustRegisterDate: payloads.RegisterDate,
 	}
 
 	payloads_intra := intrajasa.IntraCreateVA{
 		CustomerData: customer_intra,
-		TotalAmount:  strconv.FormatFloat(100000, 'f', 2, 64),
+		TotalAmount:  strconv.FormatFloat(float64(payloads.Amount), 'f', 2, 64),
 	}
-	bank := credentials.NewBCA()
-	credential := credentials.NewCredential(bank)
+
+	credential := credentials.NewCredential(payloads.Bank)
 	intra_lib := intrajasa.NewIntraLib(credential)
-	create_va := intra_lib.CreateVa(payloads_intra)
+	create_va := intra_lib.CreateVa(&payloads_intra)
 	return &ResponseVa{
 		OrderID: create_va,
 	}, nil

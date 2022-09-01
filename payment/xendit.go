@@ -41,8 +41,8 @@ func (x *Xendit) Pay(payloads CreateVa) (*ResponseVa, error) {
 	return &responseVa, nil
 }
 
-func (x *Xendit) Inquiry() (string, error) {
-	return "Xendit Inquiry", nil
+func (x *Xendit) Inquiry(order_id string) (*ResponseVa, error) {
+	return &ResponseVa{}, nil
 }
 
 func (x *Xendit) Callback() (string, error) {

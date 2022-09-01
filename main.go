@@ -8,13 +8,15 @@ import (
 
 func main() {
 
-	vendor := payment.NewIntrajasa()
-	paymentService := payment.NewPayment(vendor)
+	paymentService := payment.NewPayment("intrajasa")
 
 	createVa := payment.CreateVa{
-		Bank:   "bca",
-		Name:   "Dandi Fermeko",
-		Amount: 25000,
+		Bank:         "bca",
+		Name:         "Dandi Fermeko",
+		Amount:       25000,
+		Address:      "Jakarta Selatan",
+		Email:        "dandifermeko@gmail.com",
+		RegisterDate: "2020-01-01",
 	}
 
 	pay, err := paymentService.Pay(createVa)
@@ -23,12 +25,5 @@ func main() {
 		log.Fatal(err)
 	}
 
-	// inquiry, err := paymentService.Inquiry(pay.OrderID)
-
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
-
 	fmt.Println(pay)
-	// fmt.Println(inquiry)
 }

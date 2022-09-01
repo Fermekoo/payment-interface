@@ -94,23 +94,23 @@ func (lib *IntraLib) generateToken(ref_code string) (*Intra, error) {
 	return &data, err
 }
 
-func (lib *IntraLib) CreateVa(payloads IntraCreateVA) string {
+func (lib *IntraLib) CreateVa(payloads *IntraCreateVA) string {
 	ref_code := uuid.NewString()
 	token, err := lib.generateToken(ref_code)
 	secure_code := lib.SecureCodeVa(ref_code, payloads.TotalAmount, payloads.CustomerData.CustName, token.Token)
 	merchant_id := lib.Credential.GetMerchantId()
-	request_payloads := &payloads
+	request_payloads := payloads
 	if err != nil {
 		log.Fatal(err)
 	}
 	hash_token := sha256.Sum256([]byte(token.Token))
-	ecrypted_token := fmt.Sprintf("%x", hash_token[:])
+	encrypted_token := fmt.Sprintf("%x", hash_token[:])
 	request_payloads.SecureCode = secure_code
 	request_payloads.MerchantRefCode = ref_code
 	request_payloads.MerchantId = merchant_id
-	request_payloads.VaType = 1
+	request_payloads.VaType = 1 // 1 one time VA
 
-	url := base_url + "/vaonline/rest/json/generateva?t=" + ecrypted_token
+	url := base_url + "/vaonline/rest/json/generateva?t=" + encrypted_token
 	json_payloads, err := json.Marshal(request_payloads)
 
 	if err != nil {
