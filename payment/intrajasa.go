@@ -2,6 +2,7 @@ package payment
 
 import (
 	"payment-interface/intrajasa"
+	"payment-interface/intrajasa/credentials"
 	"strconv"
 	"strings"
 )
@@ -26,7 +27,10 @@ func (i *Intrajasa) Pay(payloads CreateVa) (*ResponseVa, error) {
 		CustomerData: customer_intra,
 		TotalAmount:  strconv.FormatFloat(100000, 'f', 2, 64),
 	}
-	create_va := intrajasa.CreateVa(payloads_intra)
+	bank := credentials.NewBCA()
+	credential := credentials.NewCredential(bank)
+	intra_lib := intrajasa.NewIntraLib(credential)
+	create_va := intra_lib.CreateVa(payloads_intra)
 	return &ResponseVa{
 		OrderID: create_va,
 	}, nil

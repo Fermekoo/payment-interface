@@ -9,19 +9,27 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"payment-interface/intrajasa/credentials"
 	"payment-interface/utils"
 
 	"github.com/google/uuid"
 )
 
+type IntraLib struct {
+	Credential credentials.IntraCredentialsInterface
+}
 type Intra struct {
 	Token string
 }
 
 var base_url = utils.Conf("payment.intrajasa.base_url_development")
 
-func secretWordHash() string {
-	secret_word := utils.Conf("payment.intrajasa.bri.secret_word")
+func NewIntraLib(credential *credentials.Credentials) *IntraLib {
+	return &IntraLib{credential}
+}
+
+func (lib *IntraLib) secretWordHash() string {
+	secret_word := lib.Credential.GetSecretWord()
 	sha := sha1.New()
 
 	sha.Write([]byte(secret_word))
@@ -31,9 +39,9 @@ func secretWordHash() string {
 	return encrypted_string
 }
 
-func secureCodeToken(ref_code string) string {
-	merchant_id := utils.Conf("payment.intrajasa.bri.merchant_id")
-	secret_word_hash := secretWordHash()
+func (lib *IntraLib) secureCodeToken(ref_code string) string {
+	merchant_id := lib.Credential.GetMerchantId()
+	secret_word_hash := lib.secretWordHash()
 	code := merchant_id + ref_code + secret_word_hash
 
 	hash_code := sha256.Sum256([]byte(code))
@@ -43,8 +51,8 @@ func secureCodeToken(ref_code string) string {
 	return encrypted_string
 }
 
-func SecureCodeVa(ref_code string, amount string, display_name string, token string) string {
-	merchant_id := utils.Conf("payment.intrajasa.bri.merchant_id")
+func (lib *IntraLib) SecureCodeVa(ref_code string, amount string, display_name string, token string) string {
+	merchant_id := lib.Credential.GetMerchantId()
 	code := merchant_id + token + ref_code + display_name + amount
 
 	hash_code := sha256.Sum256([]byte(code))
@@ -54,11 +62,11 @@ func SecureCodeVa(ref_code string, amount string, display_name string, token str
 	return encrypted_string
 }
 
-func generateToken(ref_code string) (*Intra, error) {
+func (lib *IntraLib) generateToken(ref_code string) (*Intra, error) {
 
 	var data Intra
-	secure_code := secureCodeToken(ref_code)
-	merchant_id := utils.Conf("payment.intrajasa.bri.merchant_id")
+	secure_code := lib.secureCodeToken(ref_code)
+	merchant_id := lib.Credential.GetMerchantId()
 	url := base_url + "/vaonline/rest/json/gettoken"
 
 	payloads := map[string]string{
@@ -86,11 +94,11 @@ func generateToken(ref_code string) (*Intra, error) {
 	return &data, err
 }
 
-func CreateVa(payloads IntraCreateVA) string {
+func (lib *IntraLib) CreateVa(payloads IntraCreateVA) string {
 	ref_code := uuid.NewString()
-	token, err := generateToken(ref_code)
-	secure_code := SecureCodeVa(ref_code, payloads.TotalAmount, payloads.CustomerData.CustName, token.Token)
-	merchant_id := utils.Conf("payment.intrajasa.bri.merchant_id")
+	token, err := lib.generateToken(ref_code)
+	secure_code := lib.SecureCodeVa(ref_code, payloads.TotalAmount, payloads.CustomerData.CustName, token.Token)
+	merchant_id := lib.Credential.GetMerchantId()
 	request_payloads := &payloads
 	if err != nil {
 		log.Fatal(err)
