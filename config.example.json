@@ -1,0 +1,22 @@
+{
+    "payment":{
+        "midtrans_server_key": "",
+        "xendit_server_key":"",
+        "intrajasa": {
+            "base_url_development":"",
+            "base_url_production":"",
+            "bri": {
+                "merchant_id":"",
+                "secret_word":""
+            },
+            "mandiri": {
+                "merchant_id":"",
+                "secret_word":""
+            },
+            "bca": {
+                "merchant_id":"",
+                "secret_word":""
+            }
+        }
+    }
+}
