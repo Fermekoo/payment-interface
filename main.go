@@ -8,7 +8,7 @@ import (
 
 func main() {
 
-	paymentService := payment.NewPayment("intrajasa")
+	paymentService := payment.NewPayment("intrajasa") // xendit/mitrans/intrajasa
 
 	createVa := payment.CreateVa{
 		Bank:         "bca",
