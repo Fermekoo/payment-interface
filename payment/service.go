@@ -2,6 +2,7 @@ package payment
 
 import (
 	"errors"
+	c "payment-interface/constants"
 
 	"github.com/gobeam/stringy"
 )
@@ -14,11 +15,11 @@ func NewPayment(vendor_name string) (*Payment, error) {
 	var payment PaymentInterface
 	var err error
 	switch stringy.New(vendor_name).ToUpper() {
-	case "XENDIT":
+	case c.XENDIT:
 		payment = NewXendit()
-	case "MIDTRANS":
+	case c.MIDTRANS:
 		payment = NewMidtrans()
-	case "INTRAJASA":
+	case c.INTRAJASA:
 		payment = NewIntrajasa()
 	default:
 		err = errors.New("service not available")
