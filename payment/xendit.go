@@ -19,7 +19,7 @@ func NewXendit() *Xendit {
 	return &Xendit{}
 }
 
-func (x *Xendit) Pay(payloads CreateVa) (*ResponseVa, error) {
+func (x *Xendit) Pay(payloads *CreateVa) (*ResponseVa, error) {
 
 	createVaParams := virtualaccount.CreateFixedVAParams{
 		ExternalID: uuid.NewString(),

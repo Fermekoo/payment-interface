@@ -15,7 +15,7 @@ func NewIntrajasa() *Intrajasa {
 	return &Intrajasa{}
 }
 
-func (i *Intrajasa) Pay(payloads CreateVa) (*ResponseVa, error) {
+func (i *Intrajasa) Pay(payloads *CreateVa) (*ResponseVa, error) {
 	customer_intra := intrajasa.CustomerIntra{
 		CustName:         strings.ToUpper(payloads.Name),
 		CustAddress1:     payloads.Address,

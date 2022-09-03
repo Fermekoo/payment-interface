@@ -26,7 +26,7 @@ func NewPayment(vendor_name string) (*Payment, error) {
 	return &Payment{payment}, err
 }
 
-func (p *Payment) Pay(payloads CreateVa) (*ResponseVa, error) {
+func (p *Payment) Pay(payloads *CreateVa) (*ResponseVa, error) {
 	return p.Payment.Pay(payloads)
 }
 
