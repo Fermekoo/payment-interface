@@ -3,12 +3,13 @@ package main
 import (
 	"fmt"
 	"log"
+	c "payment-interface/constants"
 	"payment-interface/payment"
 )
 
 func main() {
 
-	paymentService, err := payment.NewPayment("midtrans") // xendit/mitrans/intrajasa/gopay
+	paymentService, err := payment.NewPayment(c.MIDTRANS) // xendit/mitrans/intrajasa/gopay
 
 	if err != nil {
 		log.Fatal(err)
