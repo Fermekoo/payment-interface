@@ -108,7 +108,6 @@ func (lib *IntraLib) CreateVa(payloads *IntraCreateVA) string {
 	request_payloads.SecureCode = secure_code
 	request_payloads.MerchantRefCode = ref_code
 	request_payloads.MerchantId = merchant_id
-	request_payloads.VaType = 1 // 1 one time VA
 
 	url := base_url + "/vaonline/rest/json/generateva?t=" + encrypted_token
 	json_payloads, err := json.Marshal(request_payloads)

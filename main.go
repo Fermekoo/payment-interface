@@ -9,14 +9,14 @@ import (
 
 func main() {
 
-	paymentService, err := payment.NewPayment(c.MIDTRANS) // xendit/mitrans/intrajasa/gopay
+	paymentService, err := payment.NewPayment(c.INTRAJASA) // xendit/mitrans/intrajasa/gopay
 
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	createVa := payment.CreateVa{
-		Bank:         "gopay",
+		Bank:         "BRI",
 		Name:         "Dandi Fermeko",
 		Amount:       25000,
 		Address:      "Jakarta Selatan",
@@ -30,5 +30,5 @@ func main() {
 		log.Fatal(err)
 	}
 
-	fmt.Println(pay)
+	fmt.Println(pay.OrderID)
 }

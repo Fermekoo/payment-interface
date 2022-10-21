@@ -27,14 +27,14 @@ func NewPayment(vendor_name string) (*Payment, error) {
 	return &Payment{payment}, err
 }
 
-func (p *Payment) Pay(payloads *CreateVa) (*ResponseVa, error) {
+func (p Payment) Pay(payloads *CreateVa) (*ResponseVa, error) {
 	return p.Payment.Pay(payloads)
 }
 
-func (p *Payment) Inquiry(order_id string) (*ResponseVa, error) {
+func (p Payment) Inquiry(order_id string) (*ResponseVa, error) {
 	return p.Payment.Inquiry(order_id)
 }
 
-func (p *Payment) Callback() (string, error) {
+func (p Payment) Callback() (string, error) {
 	return p.Payment.Callback()
 }

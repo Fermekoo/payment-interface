@@ -23,14 +23,15 @@ func (i *Intrajasa) Pay(payloads *CreateVa) (*ResponseVa, error) {
 		CustRegisterDate: payloads.RegisterDate,
 	}
 
-	payloads_intra := intrajasa.IntraCreateVA{
+	payloads_intra := &intrajasa.IntraCreateVA{
 		CustomerData: customer_intra,
 		TotalAmount:  strconv.FormatFloat(float64(payloads.Amount), 'f', 2, 64),
+		VaType:       1, //one time va
 	}
 
 	credential := credentials.NewCredential(payloads.Bank)
 	intra_lib := intrajasa.NewIntraLib(credential)
-	create_va := intra_lib.CreateVa(&payloads_intra)
+	create_va := intra_lib.CreateVa(payloads_intra)
 	return &ResponseVa{
 		OrderID: create_va,
 	}, nil
