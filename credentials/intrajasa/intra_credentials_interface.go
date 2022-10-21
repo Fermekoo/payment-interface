@@ -1,4 +1,4 @@
-package credentials
+package intrajasa
 
 type IntraCredentialsInterface interface {
 	GetMerchantId() string

@@ -1,4 +1,4 @@
-package credentials
+package intrajasa
 
 import "github.com/gobeam/stringy"
 

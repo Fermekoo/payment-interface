@@ -30,5 +30,5 @@ func main() {
 		log.Fatal(err)
 	}
 
-	fmt.Println(pay.OrderID)
+	fmt.Println(pay)
 }

@@ -1,4 +1,4 @@
-package credentials
+package intrajasa
 
 import "payment-interface/utils"
 

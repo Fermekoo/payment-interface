@@ -3,6 +3,7 @@ module payment-interface
 go 1.16
 
 require (
+	github.com/Fermekoo/intrajasa-go v1.0.0
 	github.com/gobeam/stringy v0.0.5
 	github.com/google/uuid v1.3.0
 	github.com/midtrans/midtrans-go v1.3.0
