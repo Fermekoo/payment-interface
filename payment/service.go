@@ -2,24 +2,22 @@ package payment
 
 import (
 	"errors"
-	c "payment-interface/constants"
-
-	"github.com/gobeam/stringy"
+	vendor "payment-interface/entity"
 )
 
 type Payment struct {
 	Payment PaymentInterface
 }
 
-func NewPayment(vendor_name string) (*Payment, error) {
+func NewPayment(vendorName vendor.Vendor) (*Payment, error) {
 	var payment PaymentInterface
 	var err error
-	switch stringy.New(vendor_name).ToUpper() {
-	case c.XENDIT:
+	switch vendorName {
+	case vendor.XENDIT:
 		payment = NewXendit()
-	case c.MIDTRANS:
+	case vendor.MIDTRANS:
 		payment = NewMidtrans()
-	case c.INTRAJASA:
+	case vendor.INTRAJASA:
 		payment = NewIntrajasa()
 	default:
 		err = errors.New("service not available")

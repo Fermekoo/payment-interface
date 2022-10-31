@@ -42,7 +42,22 @@ func (x *Xendit) Pay(payloads *CreateVa) (*ResponseVa, error) {
 }
 
 func (x *Xendit) Inquiry(order_id string) (*ResponseVa, error) {
-	return &ResponseVa{}, nil
+	getVAParams := virtualaccount.GetFixedVAParams{
+		ID: order_id,
+	}
+
+	response, err := virtualaccount.GetFixedVA(&getVAParams)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	responseVa := ResponseVa{
+		OrderID:  response.ID,
+		VaNumber: response.AccountNumber,
+		Status:   response.Status,
+	}
+
+	return &responseVa, nil
 }
 
 func (x *Xendit) Callback() (string, error) {
