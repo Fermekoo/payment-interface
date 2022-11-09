@@ -32,7 +32,7 @@ func (i *Intrajasa) Pay(payloads *CreateVa) (*ResponseVa, error) {
 		MerchantRefCode: uuid.NewString(),
 		TotalAmount:     payloads.Amount,
 		CustomerData:    customer_intra,
-		VaType:          1,
+		VaType:          2,
 	}
 
 	credential := intra_credential.NewCredential(payloads.Bank)

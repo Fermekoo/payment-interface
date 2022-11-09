@@ -16,7 +16,7 @@ func main() {
 	}
 
 	createVa := payment.CreateVa{
-		Bank:         "BRI",
+		Bank:         "Sinarmas",
 		Name:         "Dandi Fermeko",
 		Amount:       25000,
 		Address:      "Jakarta Selatan",

@@ -18,6 +18,8 @@ func NewCredential(bank_name string) *Credentials {
 		bank = NewMandiri()
 	case "PERMATA":
 		bank = NewPermata()
+	case "SINARMAS":
+		bank = NewSinarmas()
 	}
 
 	return &Credentials{Credentials: bank}
